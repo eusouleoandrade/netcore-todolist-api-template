@@ -77,5 +77,23 @@ namespace Core.Application.Resources {
                 return ResourceManager.GetString("DATA_BASE_SERVER_ERROR_TXT", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Failed to process request.
+        /// </summary>
+        public static string RESPONSE_FAILED_MESSAGE {
+            get {
+                return ResourceManager.GetString("RESPONSE_FAILED_MESSAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Request processed.
+        /// </summary>
+        public static string RESPONSE_SUCCEEDED_MESSAGE {
+            get {
+                return ResourceManager.GetString("RESPONSE_SUCCEEDED_MESSAGE", resourceCulture);
+            }
+        }
     }
 }

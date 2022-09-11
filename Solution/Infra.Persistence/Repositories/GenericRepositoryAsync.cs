@@ -1,10 +1,13 @@
-﻿using Core.Application.Interfaces;
+﻿using Core.Application.Exceptions;
+using Core.Application.Interfaces.Repositories;
+using Core.Application.Resources;
+using Dapper.Contrib.Extensions;
 using Infra.Persistence.Configs;
 using Microsoft.Extensions.Configuration;
 
 namespace Infra.Persistence.Repositories
 {
-    public abstract class GenericRepositoryAsync<TEntity, TId> : ConnectionConfig, IGenericRepositoryAsync<TEntity, TId>
+    public class GenericRepositoryAsync<TEntity, TId> : ConnectionConfig, IGenericRepositoryAsync<TEntity, TId>
         where TEntity : class
         where TId : struct
     {
@@ -13,30 +16,26 @@ namespace Infra.Persistence.Repositories
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            throw new NotImplementedException();
-
-            //try
-            //{
-            //    return await _connection.QueryAsync<TEntity>();
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new AppException(Msg.DATA_BASE_SERVER_ERROR_TXT, ex);
-            //}
+            try
+            {
+                return await _connection.GetAllAsync<TEntity>();
+            }
+            catch (Exception ex)
+            {
+                throw new AppException(Msg.DATA_BASE_SERVER_ERROR_TXT, ex);
+            }
         }
 
         public virtual async Task<TEntity> GetAsync(TId id)
         {
-            throw new NotImplementedException();
-
-            //try
-            //{
-            //    return await _connection.GetAsync<TEntity>(id);
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new AppException(Msg.DATA_BASE_SERVER_ERROR_TXT, ex);
-            //}
+            try
+            {
+                return await _connection.GetAsync<TEntity>(id);
+            }
+            catch (Exception ex)
+            {
+                throw new AppException(Msg.DATA_BASE_SERVER_ERROR_TXT, ex);
+            }
         }
     }
 }

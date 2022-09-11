@@ -1,4 +1,4 @@
-﻿namespace Core.Application.Interfaces
+﻿namespace Core.Application.Interfaces.Repositories
 {
     public interface IGenericRepositoryAsync<TEntity, TId>
         where TEntity : class

@@ -16,19 +16,18 @@ namespace Infra.Persistence.Bootstraps
         {
             try
             {
-                // Bootstrap table: TodoList
                 string selectTableNameSql = @"SELECT name
                                             FROM sqlite_master
-                                            WHERE type='table' AND name = 'TodoList';";
+                                            WHERE type='table' AND name = 'Todo';";
 
                 var table = _connection.Query<string>(selectTableNameSql);
 
                 var tableName = table.FirstOrDefault();
 
-                if (!string.IsNullOrEmpty(tableName) && tableName == "TodoList")
+                if (!string.IsNullOrEmpty(tableName) && tableName == "Todo")
                     return;
 
-                string createTableSql = @"CREATE TABLE TodoList (
+                string createTableSql = @"CREATE TABLE Todo (
                                         Id INTEGER PRIMARY KEY,
                                         Title VARCHAR(60) NOT NULL,
                                         Done BOOLEAN NOT NULL);";

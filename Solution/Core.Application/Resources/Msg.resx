@@ -123,4 +123,10 @@
   <data name="DATA_BASE_SERVER_ERROR_TXT" xml:space="preserve">
     <value>Database server error.</value>
   </data>
+  <data name="RESPONSE_FAILED_MESSAGE" xml:space="preserve">
+    <value>Failed to process request</value>
+  </data>
+  <data name="RESPONSE_SUCCEEDED_MESSAGE" xml:space="preserve">
+    <value>Request processed</value>
+  </data>
 </root>
