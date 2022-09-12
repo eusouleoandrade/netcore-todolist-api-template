@@ -4,13 +4,14 @@ using Core.Application.Resources;
 using Core.Domain.Entities;
 using Dapper;
 using Microsoft.Extensions.Configuration;
+using static Dapper.SqlMapper;
 
 namespace Infra.Persistence.Repositories
 {
     public class TodoRepositoryAsync : GenericRepositoryAsync<Todo, int>, ITodoRepositoryAsync
     {
         public TodoRepositoryAsync(IConfiguration configuration)
-            : base(configuration) { }
+        : base(configuration) { }
 
         public async Task<Todo?> CreateAsync(Todo entity)
         {

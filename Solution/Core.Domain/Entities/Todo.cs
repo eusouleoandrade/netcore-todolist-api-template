@@ -17,6 +17,13 @@ namespace Core.Domain.Entities
             Done = done;
         }
 
+        public Todo(Int64 id, string title, string done)
+        {
+            Id = (int)id;
+            Title = title;
+            Done = bool.TryParse(done, out bool result) && result;
+        }
+
         public Todo(string title, bool done) : this(default, title, done)
         {
         }

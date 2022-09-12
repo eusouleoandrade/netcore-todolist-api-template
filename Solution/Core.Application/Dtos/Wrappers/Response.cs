@@ -21,7 +21,9 @@ namespace Core.Application.Dtos.Wrappers
         public Response(TData data, bool succeeded, string? message = null, IEnumerable<NotificationMessage>? errors = null)
         {
             Succeeded = succeeded;
+
             Errors = errors;
+
             Data = data;
 
             if (string.IsNullOrWhiteSpace(message))
@@ -49,7 +51,9 @@ namespace Core.Application.Dtos.Wrappers
         public Response(TData data, bool succeeded, string? message = null, TErrors? errors = null)
         {
             Succeeded = succeeded;
+
             Errors = errors;
+
             Data = data;
 
             if (string.IsNullOrWhiteSpace(message))
@@ -71,6 +75,7 @@ namespace Core.Application.Dtos.Wrappers
         public Response(bool succeeded, string? message = null, IEnumerable<NotificationMessage>? errors = null)
         {
             Succeeded = succeeded;
+
             Errors = errors;
 
             if (string.IsNullOrWhiteSpace(message))

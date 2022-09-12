@@ -5,7 +5,6 @@ using Presentation.WebApi.Extensions;
 
 // Configure services
 var builder = WebApplication.CreateBuilder(args);
-
 builder.Services.AddPersistenceLayer();
 builder.Services.AddApplicationLayer();
 builder.Services.AddControllers();
@@ -16,13 +15,11 @@ builder.Services.AddApiVersioningExtension();
 // Configure app
 var app = builder.Build();
 
+IServiceScope scope = app.Services.CreateScope();
+scope.ServiceProvider.ConfigureDatabaseBootstrap();
+
 app.UseSwaggerExtension();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
-
-// Configure services provider
-IServiceScope scope = app.Services.CreateScope();
-
-scope.ServiceProvider.ConfigureDataBaseBootstrap();
