@@ -7,9 +7,10 @@ using Presentation.WebApi.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPersistenceLayer();
 builder.Services.AddApplicationLayer();
-builder.Services.AddControllers();
+builder.Services.AddControllerExtension();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerExtension();
+builder.Services.AddNotificationContextExtension();
 builder.Services.AddApiVersioningExtension();
 
 // Configure app
