@@ -119,14 +119,74 @@
   </resheader>
   <data name="DATA_BASE_SERVER_ERROR_COD" xml:space="preserve">
     <value>COD0002</value>
+    <comment>COD0002</comment>
   </data>
   <data name="DATA_BASE_SERVER_ERROR_TXT" xml:space="preserve">
     <value>Database server error.</value>
+    <comment>COD0002</comment>
   </data>
-  <data name="RESPONSE_FAILED_MESSAGE" xml:space="preserve">
+  <data name="DATA_OF_X0_X1_NOT_FOUND_COD" xml:space="preserve">
+    <value>COD0004</value>
+    <comment>COD0004</comment>
+  </data>
+  <data name="DATA_OF_X0_X1_NOT_FOUND_TXT" xml:space="preserve">
+    <value>Data of {0} {1} not found.</value>
+    <comment>COD0004</comment>
+  </data>
+  <data name="FAILED_TO_REMOVE_X0_COD" xml:space="preserve">
+    <value>COD0003</value>
+    <comment>COD0003</comment>
+  </data>
+  <data name="FAILED_TO_REMOVE_X0_TXT" xml:space="preserve">
+    <value>Failed to remove {0}.</value>
+    <comment>COD0003</comment>
+  </data>
+  <data name="FAILED_TO_UPDATE_X0_COD" xml:space="preserve">
+    <value>COD0006</value>
+    <comment>COD0006</comment>
+  </data>
+  <data name="FAILED_TO_UPDATE_X0_TXT" xml:space="preserve">
+    <value>Failed to update {0}.</value>
+    <comment>COD0006</comment>
+  </data>
+  <data name="IDENTIFIER_X0_IS_INVALID_COD" xml:space="preserve">
+    <value>COD0005</value>
+    <comment>COD0005</comment>
+  </data>
+  <data name="IDENTIFIER_X0_IS_INVALID_TXT" xml:space="preserve">
+    <value>Identifier {0} is invalid.</value>
+    <comment>COD0005</comment>
+  </data>
+  <data name="INTERNAL_SERVER_ERROR_COD" xml:space="preserve">
+    <value>COD0000</value>
+    <comment>COD0000</comment>
+  </data>
+  <data name="INTERNAL_SERVER_ERROR_TXT" xml:space="preserve">
+    <value>Internal server error.</value>
+    <comment>COD0000</comment>
+  </data>
+  <data name="RESPONSE_FAILED_MESSAGE_COD" xml:space="preserve">
+    <value>COD0007</value>
+    <comment>COD0007</comment>
+  </data>
+  <data name="RESPONSE_FAILED_MESSAGE_TXT" xml:space="preserve">
     <value>Failed to process request</value>
+    <comment>COD0007</comment>
   </data>
-  <data name="RESPONSE_SUCCEEDED_MESSAGE" xml:space="preserve">
+  <data name="RESPONSE_SUCCEEDED_MESSAGE_COD" xml:space="preserve">
+    <value>COD0008</value>
+    <comment>COD0008</comment>
+  </data>
+  <data name="RESPONSE_SUCCEEDED_MESSAGE_TXT" xml:space="preserve">
     <value>Request processed</value>
+    <comment>COD0008</comment>
+  </data>
+  <data name="X0_IS_REQUIRED_COD" xml:space="preserve">
+    <value>COD0001</value>
+    <comment>COD0001</comment>
+  </data>
+  <data name="X0_IS_REQUIRED_TXT" xml:space="preserve">
+    <value>{0} is required.</value>
+    <comment>COD0001</comment>
   </data>
 </root>

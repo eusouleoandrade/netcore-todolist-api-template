@@ -27,7 +27,7 @@ namespace Core.Application.Dtos.Wrappers
             Data = data;
 
             if (string.IsNullOrWhiteSpace(message))
-                Message = succeeded ? Msg.RESPONSE_SUCCEEDED_MESSAGE : Msg.RESPONSE_FAILED_MESSAGE;
+                Message = succeeded ? Msg.RESPONSE_SUCCEEDED_MESSAGE_TXT : Msg.RESPONSE_FAILED_MESSAGE_TXT;
             else
                 Message = message;
         }
@@ -57,7 +57,7 @@ namespace Core.Application.Dtos.Wrappers
             Data = data;
 
             if (string.IsNullOrWhiteSpace(message))
-                Message = succeeded ? Msg.RESPONSE_SUCCEEDED_MESSAGE : Msg.RESPONSE_FAILED_MESSAGE;
+                Message = succeeded ? Msg.RESPONSE_SUCCEEDED_MESSAGE_TXT : Msg.RESPONSE_FAILED_MESSAGE_TXT;
             else
                 Message = message;
         }
@@ -79,7 +79,7 @@ namespace Core.Application.Dtos.Wrappers
             Errors = errors;
 
             if (string.IsNullOrWhiteSpace(message))
-                Message = succeeded ? Msg.RESPONSE_SUCCEEDED_MESSAGE : Msg.RESPONSE_FAILED_MESSAGE;
+                Message = succeeded ? Msg.RESPONSE_SUCCEEDED_MESSAGE_TXT : Msg.RESPONSE_FAILED_MESSAGE_TXT;
             else
                 Message = message;
         }

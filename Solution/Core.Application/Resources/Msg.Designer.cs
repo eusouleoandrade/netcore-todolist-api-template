@@ -79,20 +79,146 @@ namespace Core.Application.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a COD0004.
+        /// </summary>
+        public static string DATA_OF_X0_X1_NOT_FOUND_COD {
+            get {
+                return ResourceManager.GetString("DATA_OF_X0_X1_NOT_FOUND_COD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Data of {0} {1} not found..
+        /// </summary>
+        public static string DATA_OF_X0_X1_NOT_FOUND_TXT {
+            get {
+                return ResourceManager.GetString("DATA_OF_X0_X1_NOT_FOUND_TXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a COD0003.
+        /// </summary>
+        public static string FAILED_TO_REMOVE_X0_COD {
+            get {
+                return ResourceManager.GetString("FAILED_TO_REMOVE_X0_COD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Failed to remove {0}..
+        /// </summary>
+        public static string FAILED_TO_REMOVE_X0_TXT {
+            get {
+                return ResourceManager.GetString("FAILED_TO_REMOVE_X0_TXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a COD0006.
+        /// </summary>
+        public static string FAILED_TO_UPDATE_X0_COD {
+            get {
+                return ResourceManager.GetString("FAILED_TO_UPDATE_X0_COD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Failed to update {0}..
+        /// </summary>
+        public static string FAILED_TO_UPDATE_X0_TXT {
+            get {
+                return ResourceManager.GetString("FAILED_TO_UPDATE_X0_TXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a COD0005.
+        /// </summary>
+        public static string IDENTIFIER_X0_IS_INVALID_COD {
+            get {
+                return ResourceManager.GetString("IDENTIFIER_X0_IS_INVALID_COD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Identifier {0} is invalid..
+        /// </summary>
+        public static string IDENTIFIER_X0_IS_INVALID_TXT {
+            get {
+                return ResourceManager.GetString("IDENTIFIER_X0_IS_INVALID_TXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a COD0000.
+        /// </summary>
+        public static string INTERNAL_SERVER_ERROR_COD {
+            get {
+                return ResourceManager.GetString("INTERNAL_SERVER_ERROR_COD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Internal server error..
+        /// </summary>
+        public static string INTERNAL_SERVER_ERROR_TXT {
+            get {
+                return ResourceManager.GetString("INTERNAL_SERVER_ERROR_TXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a COD0007.
+        /// </summary>
+        public static string RESPONSE_FAILED_MESSAGE_COD {
+            get {
+                return ResourceManager.GetString("RESPONSE_FAILED_MESSAGE_COD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Failed to process request.
         /// </summary>
-        public static string RESPONSE_FAILED_MESSAGE {
+        public static string RESPONSE_FAILED_MESSAGE_TXT {
             get {
-                return ResourceManager.GetString("RESPONSE_FAILED_MESSAGE", resourceCulture);
+                return ResourceManager.GetString("RESPONSE_FAILED_MESSAGE_TXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a COD0008.
+        /// </summary>
+        public static string RESPONSE_SUCCEEDED_MESSAGE_COD {
+            get {
+                return ResourceManager.GetString("RESPONSE_SUCCEEDED_MESSAGE_COD", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Request processed.
         /// </summary>
-        public static string RESPONSE_SUCCEEDED_MESSAGE {
+        public static string RESPONSE_SUCCEEDED_MESSAGE_TXT {
             get {
-                return ResourceManager.GetString("RESPONSE_SUCCEEDED_MESSAGE", resourceCulture);
+                return ResourceManager.GetString("RESPONSE_SUCCEEDED_MESSAGE_TXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a COD0001.
+        /// </summary>
+        public static string X0_IS_REQUIRED_COD {
+            get {
+                return ResourceManager.GetString("X0_IS_REQUIRED_COD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a {0} is required..
+        /// </summary>
+        public static string X0_IS_REQUIRED_TXT {
+            get {
+                return ResourceManager.GetString("X0_IS_REQUIRED_TXT", resourceCulture);
             }
         }
     }

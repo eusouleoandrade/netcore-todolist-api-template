@@ -37,50 +37,6 @@ namespace Infra.Persistence.Repositories
             {
                 throw new AppException(Msg.DATA_BASE_SERVER_ERROR_TXT, ex);
             }
-
-        }
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            try
-            {
-                string deleteSql = @"DELETE FROM todo
-                                    WHERE id = @id";
-
-                var affectedrows = await _connection.ExecuteAsync(deleteSql, new
-                {
-                    id
-                });
-
-                return affectedrows > Decimal.Zero;
-            }
-            catch (Exception ex)
-            {
-                throw new AppException(Msg.DATA_BASE_SERVER_ERROR_TXT, ex);
-            }
-        }
-
-        public async Task<bool> UpdateAsync(Todo entity)
-        {
-            try
-            {
-                string updateSql = @"UPDATE todo
-                                    SET title=@title, done=@done
-                                    WHERE id=@id";
-
-                var affectedrows = await _connection.ExecuteAsync(updateSql, new
-                {
-                    id = entity.Id,
-                    title = entity.Title,
-                    done = entity.Done
-                });
-
-                return affectedrows > Decimal.Zero;
-            }
-            catch (Exception ex)
-            {
-                throw new AppException(Msg.DATA_BASE_SERVER_ERROR_TXT, ex);
-            }
         }
     }
 }
