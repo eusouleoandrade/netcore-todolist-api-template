@@ -3,6 +3,7 @@ using Core.Application.Dtos.Queries;
 using Core.Application.Dtos.Requests;
 using Core.Application.Dtos.Wrappers;
 using Core.Application.Interfaces.UseCases;
+using Infra.Notification.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.WebApi.Controllers.Common;
 
@@ -12,16 +13,31 @@ namespace Presentation.WebApi.Controllers.v1
     public class TodoController : BaseApiController
     {
         private readonly IGetAllTodoUseCase _getAllTodoUseCase;
-        private readonly IMapper _mapper;
         private readonly ICreateTodoUseCase _createTodoUseCase;
+        private readonly IDeleteTodoUseCase _deleteTodoUseCase;
+        private readonly IGetTodoUseCase _getTodoUseCase;
+        //private readonly IUpdateTodoUseCase _updateTodoUseCase;
+        //private readonly ISetDoneTodoUseCase _setDoneTodoUseCase;
+        private readonly IMapper _mapper;
+        private readonly NotificationContext _notificationContext;
 
         public TodoController(IGetAllTodoUseCase getAllTodoUseCase,
-           IMapper mapper,
-           ICreateTodoUseCase createTodoUseCase)
+            ICreateTodoUseCase createTodoUseCase,
+            IMapper mapper,
+            NotificationContext notificationContext,
+            IDeleteTodoUseCase deleteTodoUseCase,
+            //IUpdateTodoUseCase updateTodoUseCase,
+            //ISetDoneTodoUseCase setDoneTodoUseCase,
+            IGetTodoUseCase getTodoUseCase)
         {
             _getAllTodoUseCase = getAllTodoUseCase;
-            _mapper = mapper;
             _createTodoUseCase = createTodoUseCase;
+            _mapper = mapper;
+            _notificationContext = notificationContext;
+            _deleteTodoUseCase = deleteTodoUseCase;
+            _getTodoUseCase = getTodoUseCase;
+            //_updateTodoUseCase = updateTodoUseCase;
+            //_setDoneTodoUseCase = setDoneTodoUseCase;
         }
 
         [HttpGet]
@@ -43,6 +59,24 @@ namespace Presentation.WebApi.Controllers.v1
             var response = _mapper.Map<CreateTodoQuery>(useCaseResponse);
 
             return Created($"/api/v1/todo/{response.Id}", new Response<CreateTodoQuery>(data: response, succeeded: true));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Response>> Delete(int id)
+        {
+            await _deleteTodoUseCase.RunAsync(id);
+
+            return NoContent();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Response<GetTodoQuery>>> Get(int id)
+        {
+            var useCaseResponse = await _getTodoUseCase.RunAsync(id);
+
+            var response = _mapper.Map<GetTodoQuery>(useCaseResponse);
+
+            return Ok(new Response<GetTodoQuery>(succeeded: true, data: response));
         }
     }
 }
