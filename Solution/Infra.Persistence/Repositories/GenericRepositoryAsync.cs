@@ -11,7 +11,7 @@ namespace Infra.Persistence.Repositories
         where TEntity : class
         where TId : struct
     {
-        protected GenericRepositoryAsync(IConfiguration configuration)
+        public GenericRepositoryAsync(IConfiguration configuration)
             : base(configuration) { }
 
         public virtual async Task<TId?> InsertAsync(TEntity entity)

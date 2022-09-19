@@ -20,9 +20,9 @@ namespace Core.Application.Mappings
 
             CreateMap<CreateTodoUseCaseResponse, CreateTodoQuery>();
 
-            //CreateMap<Todo, GetTodoUseCaseResponse>();
+            CreateMap<Todo, GetTodoUseCaseResponse>().ReverseMap();
 
-            //CreateMap<GetTodoUseCaseResponse, GetTodoQuery>();
+            CreateMap<GetTodoUseCaseResponse, GetTodoQuery>();
 
             //CreateMap<UpdateTodoRequest, UpdateTodoUseCaseRequest>();
         }
