@@ -24,7 +24,7 @@ namespace Core.Application.Mappings
 
             CreateMap<GetTodoUseCaseResponse, GetTodoQuery>();
 
-            //CreateMap<UpdateTodoRequest, UpdateTodoUseCaseRequest>();
+            CreateMap<UpdateTodoRequest, UpdateTodoUseCaseRequest>();
         }
     }
 }
