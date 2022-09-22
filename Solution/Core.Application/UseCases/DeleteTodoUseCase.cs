@@ -38,8 +38,7 @@ namespace Core.Application.UseCases
             var removed = await _genericRepositoryAsync.DeleteAsync(todo);
 
             if (!removed)
-                _notificationContext.AddErrorNotification(Msg.FAILED_TO_REMOVE_X0_COD,
-                    Msg.FAILED_TO_REMOVE_X0_TXT.ToFormat("Todo"));
+                _notificationContext.AddErrorNotification(Msg.FAILED_TO_REMOVE_X0_COD, Msg.FAILED_TO_REMOVE_X0_TXT.ToFormat("Todo"));
         }
     }
 }
