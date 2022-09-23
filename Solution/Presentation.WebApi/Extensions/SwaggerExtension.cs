@@ -15,7 +15,14 @@ namespace Presentation.WebApi.Extensions
                 {
                     Version = "v1",
                     Title = "Todo List v1",
-                    Description = "Your todo list v1."
+                    Description = "Your to-do list v1."
+                });
+
+                c.SwaggerDoc("v2", new OpenApiInfo
+                {
+                    Version = "v2",
+                    Title = "Todo List v2",
+                    Description = "Your to-do list v2."
                 });
             });
         }
@@ -29,7 +36,9 @@ namespace Presentation.WebApi.Extensions
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo List - V1");
+                c.SwaggerEndpoint("/swagger/v2/swagger.json", "Todo List - V2");
                 c.RoutePrefix = string.Empty;
+                c.InjectStylesheet("/swagger-ui/SwaggerDark.css");
             });
         }
     }
