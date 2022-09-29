@@ -26,7 +26,13 @@ namespace Tests.Unit.UseCases.Todos
             _mapperMock = mapperConfigurationMock.CreateMapper();
         }
 
-        [Theory(DisplayName = "Should Run Successfully")]
+        /// <summary>
+        /// Should execute successfully
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Theory(DisplayName = "Should execute successfully")]
         [InlineData("Ir ao mercado.", 1)]
         [InlineData("Ir ao Dentista.", 2)]
         [InlineData("Fazer investimentos.", 3)]
@@ -55,6 +61,37 @@ namespace Tests.Unit.UseCases.Todos
             notificationContext.HasErrorNotification.Should().BeFalse();
             notificationContext.ErrorNotifications.Should().HaveCount(0);
             notificationContext.ErrorNotifications.Should().BeEmpty();
+        }
+
+        /// <summary>
+        /// Should not execute when title is invalid
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        [Theory(DisplayName = "Should not execute when title is invalid")]
+        [InlineData("")]
+        [InlineData(" ")]
+        public async Task ShouldNotExecute_WhenTitleIsInvalid(string title)
+        {
+            // Arranje
+            var notificationContext = new NotificationContext();
+            var createTodoUseCase = new CreateTodoUseCase(notificationContext, _mapperMock, _todoRepositoryAsyncMock.Object);
+            var useCaseRequest = new CreateTodoUseCaseRequest(title);
+
+            // Act
+            var useCaseResponse = await createTodoUseCase.RunAsync(useCaseRequest);
+
+            // Assert
+            useCaseResponse.Should().BeNull();
+            useCaseResponse.Should().Be(default);
+
+            notificationContext.Should().NotBeNull();
+            notificationContext.HasErrorNotification.Should().BeTrue();
+            notificationContext.ErrorNotifications.Should().NotBeEmpty();
+            notificationContext.ErrorNotifications.Should().HaveCount(1);
+            notificationContext.ErrorNotifications.Should().ContainSingle();
+            notificationContext.ErrorNotifications.Should().Satisfy(e => e.Key == "COD0001" && e.Message == "Title is required.");
+            notificationContext.SuccessNotifications.Should().BeEmpty();
         }
     }
 }
