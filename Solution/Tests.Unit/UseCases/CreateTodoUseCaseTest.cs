@@ -9,17 +9,17 @@ using Infra.Notification.Contexts;
 using Moq;
 using Xunit;
 
-namespace Tests.Unit.UseCases.Todos
+namespace Tests.Unit.UseCases
 {
     public class CreateTodoUseCaseTest
     {
         private readonly IMapper _mapperMock;
-        private readonly Moq.Mock<ITodoRepositoryAsync> _todoRepositoryAsyncMock;
+        private readonly Mock<ITodoRepositoryAsync> _todoRepositoryAsyncMock;
 
         public CreateTodoUseCaseTest()
         {
             // Mock repository
-            _todoRepositoryAsyncMock = new Moq.Mock<ITodoRepositoryAsync>();
+            _todoRepositoryAsyncMock = new Mock<ITodoRepositoryAsync>();
 
             // Set auto mapper configs
             var mapperConfigurationMock = new MapperConfiguration(cfg => cfg.AddProfile(new GeneralProfile()));
