@@ -87,7 +87,6 @@ namespace Tests.Unit.UseCases
             // Assert
             notificationContext.Should().NotBeNull();
             notificationContext.HasErrorNotification.Should().BeTrue();
-            notificationContext.HasErrorNotification.Should().NotBe(false);
             notificationContext.ErrorNotifications.Should().HaveCount(1);
             notificationContext.ErrorNotifications.Should().NotBeEmpty();
             notificationContext.ErrorNotifications.Should().ContainSingle();
