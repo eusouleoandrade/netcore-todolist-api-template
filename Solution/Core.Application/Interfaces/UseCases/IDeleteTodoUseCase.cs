@@ -1,6 +1,8 @@
-﻿namespace Core.Application.Interfaces.UseCases
+﻿using Infra.Notification.Interfaces;
+
+namespace Core.Application.Interfaces.UseCases
 {
-    public interface IDeleteTodoUseCase : IUseCase<int>
+    public interface IDeleteTodoUseCase : INotifiable, IUseCase<int>
     {
     }
 }

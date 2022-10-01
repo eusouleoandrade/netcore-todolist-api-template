@@ -3,23 +3,19 @@ using Core.Application.Interfaces.Repositories;
 using Core.Application.Interfaces.UseCases;
 using Core.Application.Resources;
 using Core.Domain.Entities;
-using Infra.Notification.Contexts;
+using Infra.Notification.Abstractions;
 using Infra.Notification.Extensions;
 
 namespace Core.Application.UseCases
 {
-    public class SetDoneTodoUseCase : ISetDoneTodoUseCase
+    public class SetDoneTodoUseCase : Notifiable, ISetDoneTodoUseCase
     {
         private readonly IGenericRepositoryAsync<Todo, int> _genericRepositoryAsync;
-        private readonly NotificationContext _notificationContext;
         private readonly IGetTodoUseCase _getTodoUseCase;
 
-        public SetDoneTodoUseCase(IGenericRepositoryAsync<Todo, int> genericRepositoryAsync,
-            NotificationContext notificationContext,
-            IGetTodoUseCase getTodoUseCase)
+        public SetDoneTodoUseCase(IGenericRepositoryAsync<Todo, int> genericRepositoryAsync, IGetTodoUseCase getTodoUseCase)
         {
             _genericRepositoryAsync = genericRepositoryAsync;
-            _notificationContext = notificationContext;
             _getTodoUseCase = getTodoUseCase;
         }
 
@@ -27,15 +23,18 @@ namespace Core.Application.UseCases
         {
             var getTodoUseCaseResponse = await _getTodoUseCase.RunAsync(request.Id);
 
-            if (_notificationContext.HasErrorNotification || getTodoUseCaseResponse is null)
+            if (_getTodoUseCase.HasErrorNotification || getTodoUseCaseResponse is null)
+            {
+                AddErrorNotifications(_getTodoUseCase);
                 return;
+            }
 
             var todo = new Todo(getTodoUseCaseResponse.Id, getTodoUseCaseResponse.Title, request.Done);
 
             var updated = await _genericRepositoryAsync.UpdateAsync(todo);
 
             if (!updated)
-                _notificationContext.AddErrorNotification(Msg.FAILED_TO_UPDATE_X0_COD, Msg.FAILED_TO_UPDATE_X0_TXT.ToFormat("Todo"));
+                AddErrorNotification(Msg.FAILED_TO_UPDATE_X0_COD, Msg.FAILED_TO_UPDATE_X0_TXT.ToFormat("Todo"));
         }
     }
 }

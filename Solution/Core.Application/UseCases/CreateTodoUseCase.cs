@@ -4,21 +4,17 @@ using Core.Application.Dtos.Responses;
 using Core.Application.Interfaces.Repositories;
 using Core.Application.Interfaces.UseCases;
 using Core.Domain.Entities;
-using Infra.Notification.Contexts;
+using Infra.Notification.Abstractions;
 
 namespace Core.Application.UseCases
 {
-    public class CreateTodoUseCase : ICreateTodoUseCase
+    public class CreateTodoUseCase : Notifiable, ICreateTodoUseCase
     {
-        private readonly NotificationContext _notificationContext;
         private readonly IMapper _mapper;
         private readonly ITodoRepositoryAsync _todoRepositoryAsync;
 
-        public CreateTodoUseCase(NotificationContext notificationContext,
-            IMapper mapper,
-            ITodoRepositoryAsync todoRepositoryAsync)
+        public CreateTodoUseCase(IMapper mapper, ITodoRepositoryAsync todoRepositoryAsync)
         {
-            _notificationContext = notificationContext;
             _mapper = mapper;
             _todoRepositoryAsync = todoRepositoryAsync;
         }
@@ -27,9 +23,8 @@ namespace Core.Application.UseCases
         {
             if (request.HasErrorNotification)
             {
-                _notificationContext.AddErrorNotifications(request);
-
-                return await Task.FromResult<CreateTodoUseCaseResponse?>(default);
+                AddErrorNotifications(request);
+                return default;
             }
 
             var todo = _mapper.Map<Todo>(request);

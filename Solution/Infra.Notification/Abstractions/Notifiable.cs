@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Infra.Notification.Abstractions
 {
-    public abstract class Notifiable : Notifiable<NotificationMessage>
+    public abstract class Notifiable : Notifiable<NotificationMessage>, INotifiable
     {
         // Error notifications
         public void AddErrorNotification(string key, string message)
@@ -16,9 +16,15 @@ namespace Infra.Notification.Abstractions
         public void AddErrorNotification(string key, string message, params object[] parameters)
             => _errorNotifications.Add(new NotificationMessage(key, string.Format(message, parameters)));
 
-        public void AddErrorNotifications(params Notifiable[] objects)
+        //public void AddErrorNotifications(params Notifiable[] objects)
+        //{
+        //    foreach (Notifiable notifiable in objects)
+        //        _errorNotifications.AddRange(notifiable.ErrorNotifications);
+        //}
+
+        public void AddErrorNotifications(params INotifiable[] objects)
         {
-            foreach (Notifiable notifiable in objects)
+            foreach (INotifiable notifiable in objects)
                 _errorNotifications.AddRange(notifiable.ErrorNotifications);
         }
 
@@ -29,9 +35,15 @@ namespace Infra.Notification.Abstractions
         public void AddSuccessNotification(string key, string message, params object[] parameters)
             => _successNotifications.Add(new NotificationMessage(key, string.Format(message, parameters)));
 
-        public void AddSuccessNotifications(params Notifiable[] objects)
+        //public void AddSuccessNotifications(params Notifiable[] objects)
+        //{
+        //    foreach (Notifiable notifiable in objects)
+        //        _successNotifications.AddRange(notifiable.ErrorNotifications);
+        //}
+
+        public void AddSuccessNotifications(params INotifiable[] objects)
         {
-            foreach (Notifiable notifiable in objects)
+            foreach (INotifiable notifiable in objects)
                 _successNotifications.AddRange(notifiable.ErrorNotifications);
         }
     }

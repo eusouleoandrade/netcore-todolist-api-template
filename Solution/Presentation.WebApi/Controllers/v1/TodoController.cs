@@ -53,8 +53,11 @@ namespace Presentation.WebApi.Controllers.v1
         {
             var useCaseResponse = await _createTodoUseCase.RunAsync(_mapper.Map<CreateTodoUseCaseRequest>(request));
 
-            if (useCaseResponse == null)
+            if (_createTodoUseCase.HasErrorNotification)
+            {
+                _notificationContext.AddErrorNotifications(_createTodoUseCase);
                 return BadRequest();
+            }
 
             var response = _mapper.Map<CreateTodoQuery>(useCaseResponse);
 
@@ -66,6 +69,12 @@ namespace Presentation.WebApi.Controllers.v1
         {
             await _deleteTodoUseCase.RunAsync(id);
 
+            if (_deleteTodoUseCase.HasErrorNotification)
+            {
+                _notificationContext.AddErrorNotifications(_deleteTodoUseCase);
+                return BadRequest();
+            }
+
             return NoContent();
         }
 
@@ -73,6 +82,12 @@ namespace Presentation.WebApi.Controllers.v1
         public async Task<ActionResult<Response<GetTodoQuery>>> Get(int id)
         {
             var useCaseResponse = await _getTodoUseCase.RunAsync(id);
+
+            if (_getTodoUseCase.HasErrorNotification)
+            {
+                _notificationContext.AddErrorNotifications(_getTodoUseCase);
+                return BadRequest();
+            }
 
             var response = _mapper.Map<GetTodoQuery>(useCaseResponse);
 
@@ -84,6 +99,12 @@ namespace Presentation.WebApi.Controllers.v1
         {
             await _updateTodoUseCase.RunAsync(new UpdateTodoUseCaseRequest(id, request.Title, request.Done));
 
+            if (_updateTodoUseCase.HasErrorNotification)
+            {
+                _notificationContext.AddErrorNotifications(_updateTodoUseCase);
+                return BadRequest();
+            }
+
             return Ok(new Response(succeeded: true));
         }
 
@@ -91,6 +112,12 @@ namespace Presentation.WebApi.Controllers.v1
         public async Task<ActionResult<Response>> Patch(int id, [FromBody] SetDoneTodoRequest request)
         {
             await _setDoneTodoUseCase.RunAsync(new SetDoneTodoUseCaseRequest(id, request.Done));
+
+            if (_setDoneTodoUseCase.HasErrorNotification)
+            {
+                _notificationContext.AddErrorNotifications(_setDoneTodoUseCase);
+                return BadRequest();
+            }
 
             return Ok(new Response(succeeded: true));
         }

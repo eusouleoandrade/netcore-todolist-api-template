@@ -29,7 +29,7 @@ namespace Tests.Unit.UseCases
         /// </summary>
         /// <returns></returns>
         [Fact(DisplayName = "Should execute successfully")]
-        public async Task ShouldExecuteSucessfullyAsync()
+        public async Task ShouldExecuteSucessfully()
         {
             // Arranje
             var todos = new List<Todo>()
@@ -50,6 +50,7 @@ namespace Tests.Unit.UseCases
             todoQueryList.Should().NotBeNullOrEmpty();
             todoQueryList.Should().BeEquivalentTo(todos);
             todoQueryList.Should().HaveCount(4);
+
             todoQueryList.Should().Satisfy(
                 e => e.Id == 1 && e.Title == "Ir ao mercado." && !e.Done,
                 e => e.Id == 2 && e.Title == "Fazer investimentos." && e.Done,

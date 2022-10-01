@@ -11,8 +11,7 @@ namespace Core.Application.UseCases
         private readonly IGenericRepositoryAsync<Todo, int> _genericRepositoryAsync;
         private readonly IMapper _mapper;
 
-        public GetAllTodoUseCase(IGenericRepositoryAsync<Todo, int> genericRepositoryAsync,
-            IMapper mapper)
+        public GetAllTodoUseCase(IGenericRepositoryAsync<Todo, int> genericRepositoryAsync, IMapper mapper)
         {
             _genericRepositoryAsync = genericRepositoryAsync;
             _mapper = mapper;
