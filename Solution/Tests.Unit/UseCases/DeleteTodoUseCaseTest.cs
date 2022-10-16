@@ -6,7 +6,6 @@ using Core.Application.Mappings;
 using Core.Application.UseCases;
 using Core.Domain.Entities;
 using FluentAssertions;
-using Infra.Notification.Contexts;
 using Moq;
 using Xunit;
 
@@ -43,7 +42,7 @@ namespace Tests.Unit.UseCases
         [InlineData(2, "Ir ao Dentista.", false)]
         [InlineData(3, "Fazer investimentos.", true)]
         [InlineData(4, "Pagar as contas.", false)]
-        public async Task ShouldExecuteSucessfullyAsync(int id, string title, bool done)
+        public async Task ShouldExecuteSucessfully(int id, string title, bool done)
         {
             // Arranje
             var getTodoUseCaseResponse = new GetTodoUseCaseResponse(id, title, done);
@@ -52,24 +51,23 @@ namespace Tests.Unit.UseCases
             var deleteGenericRepositoryAsyncResponse = true;
             _genericRepositoryAsyncMock.Setup(x => x.DeleteAsync(It.IsAny<Todo>())).ReturnsAsync(deleteGenericRepositoryAsyncResponse);
 
-            var notificationContext = new NotificationContext();
-            var deleteTodoUseCase = new DeleteTodoUseCase(_genericRepositoryAsyncMock.Object, notificationContext, _getTodoUseCaseMock.Object, _mapperMock);
+            var deleteTodoUseCase = new DeleteTodoUseCase(_genericRepositoryAsyncMock.Object, _getTodoUseCaseMock.Object, _mapperMock);
 
             // Act
             await deleteTodoUseCase.RunAsync(id);
 
             // Assert
-            notificationContext.HasErrorNotification.Should().BeFalse();
-            notificationContext.ErrorNotifications.Should().HaveCount(0);
-            notificationContext.ErrorNotifications.Should().BeEmpty();
+            deleteTodoUseCase.HasErrorNotification.Should().BeFalse();
+            deleteTodoUseCase.ErrorNotifications.Should().HaveCount(0);
+            deleteTodoUseCase.ErrorNotifications.Should().BeEmpty();
         }
 
         /// <summary>
-        /// Should not execute successfully
+        /// Should not execute successfully when failed to remove
         /// </summary>
         /// <returns></returns>
-        [Fact(DisplayName = "Should not execute successfully")]
-        public async Task ShouldNotExecuteSucessfullyAsync()
+        [Fact(DisplayName = "Should not execute successfully when failed to remove")]
+        public async Task ShouldNotExecute_WhenFailedToRemove()
         {
             // Arranje
             var getTodoUseCaseResponse = new GetTodoUseCaseResponse(1, "Title", true);
@@ -78,20 +76,22 @@ namespace Tests.Unit.UseCases
             var deleteGenericRepositoryAsyncResponse = false;
             _genericRepositoryAsyncMock.Setup(x => x.DeleteAsync(It.IsAny<Todo>())).ReturnsAsync(deleteGenericRepositoryAsyncResponse);
 
-            var notificationContext = new NotificationContext();
-            var deleteTodoUseCase = new DeleteTodoUseCase(_genericRepositoryAsyncMock.Object, notificationContext, _getTodoUseCaseMock.Object, _mapperMock);
+            var deleteTodoUseCase = new DeleteTodoUseCase(_genericRepositoryAsyncMock.Object, _getTodoUseCaseMock.Object, _mapperMock);
 
             // Act
             await deleteTodoUseCase.RunAsync(1);
 
             // Assert
-            notificationContext.Should().NotBeNull();
-            notificationContext.HasErrorNotification.Should().BeTrue();
-            notificationContext.ErrorNotifications.Should().HaveCount(1);
-            notificationContext.ErrorNotifications.Should().NotBeEmpty();
-            notificationContext.ErrorNotifications.Should().ContainSingle();
-            notificationContext.ErrorNotifications.Should().Satisfy(e => e.Key == "COD0003" && e.Message == "Failed to remove Todo.");
-            notificationContext.SuccessNotifications.Should().BeEmpty();
+            deleteTodoUseCase.Should().NotBeNull();
+
+            deleteTodoUseCase.HasErrorNotification.Should().BeTrue();
+
+            deleteTodoUseCase.ErrorNotifications.Should().HaveCount(1);
+            deleteTodoUseCase.ErrorNotifications.Should().NotBeEmpty();
+            deleteTodoUseCase.ErrorNotifications.Should().ContainSingle();
+            deleteTodoUseCase.ErrorNotifications.Should().Satisfy(e => e.Key == "COD0003" && e.Message == "Failed to remove Todo.");
+
+            deleteTodoUseCase.SuccessNotifications.Should().BeEmpty();
         }
     }
 }

@@ -5,7 +5,6 @@ using Core.Application.Mappings;
 using Core.Application.UseCases;
 using Core.Domain.Entities;
 using FluentAssertions;
-using Infra.Notification.Contexts;
 using Moq;
 using Xunit;
 
@@ -33,18 +32,17 @@ namespace Tests.Unit.UseCases
         /// <param name="id"></param>
         /// <returns></returns>
         [Theory(DisplayName = "Should execute successfully")]
-        [InlineData("Ir ao mercado.", 1)]
-        [InlineData("Ir ao Dentista.", 2)]
-        [InlineData("Fazer investimentos.", 3)]
-        [InlineData("Pagar as contas.", 4)]
-        public async Task ShouldExecuteSucessfullyAsync(string title, int id)
+        [InlineData(1, "Ir ao mercado.")]
+        [InlineData(2, "Ir ao Dentista.")]
+        [InlineData(3, "Fazer investimentos.")]
+        [InlineData(4, "Pagar as contas.")]
+        public async Task ShouldExecuteSucessfully(int id, string title)
         {
             // Arranje
-            var todoRepositoryResponse = new Todo(id, title, false);
-            _todoRepositoryAsyncMock.Setup(x => x.CreateAsync(It.IsAny<Todo>())).ReturnsAsync(todoRepositoryResponse);
+            var todo = new Todo(id, title, false);
+            _todoRepositoryAsyncMock.Setup(x => x.CreateAsync(It.IsAny<Todo>())).ReturnsAsync(todo);
 
-            var notificationContext = new NotificationContext();
-            var createTodoUseCase = new CreateTodoUseCase(notificationContext, _mapperMock, _todoRepositoryAsyncMock.Object);
+            var createTodoUseCase = new CreateTodoUseCase(_mapperMock, _todoRepositoryAsyncMock.Object);
             var useCaseRequest = new CreateTodoUseCaseRequest(title);
 
             // Act
@@ -52,15 +50,11 @@ namespace Tests.Unit.UseCases
 
             // Assert
             useCaseResponse.Should().NotBeNull();
-            useCaseResponse?.Done.Should().BeFalse();
-            useCaseResponse?.Title.Should().NotBeNullOrWhiteSpace();
-            useCaseResponse?.Title.Should().Be(title);
-            useCaseResponse?.Id.Should().NotBe(0);
-            useCaseResponse?.Id.Should().Be(id);
+            useCaseResponse.Should().BeEquivalentTo(todo);
 
-            notificationContext.HasErrorNotification.Should().BeFalse();
-            notificationContext.ErrorNotifications.Should().HaveCount(0);
-            notificationContext.ErrorNotifications.Should().BeEmpty();
+            createTodoUseCase.HasErrorNotification.Should().BeFalse();
+            createTodoUseCase.ErrorNotifications.Should().HaveCount(0);
+            createTodoUseCase.ErrorNotifications.Should().BeEmpty();
         }
 
         /// <summary>
@@ -74,8 +68,7 @@ namespace Tests.Unit.UseCases
         public async Task ShouldNotExecute_WhenTitleIsInvalid(string title)
         {
             // Arranje
-            var notificationContext = new NotificationContext();
-            var createTodoUseCase = new CreateTodoUseCase(notificationContext, _mapperMock, _todoRepositoryAsyncMock.Object);
+            var createTodoUseCase = new CreateTodoUseCase(_mapperMock, _todoRepositoryAsyncMock.Object);
             var useCaseRequest = new CreateTodoUseCaseRequest(title);
 
             // Act
@@ -85,13 +78,16 @@ namespace Tests.Unit.UseCases
             useCaseResponse.Should().BeNull();
             useCaseResponse.Should().Be(default);
 
-            notificationContext.Should().NotBeNull();
-            notificationContext.HasErrorNotification.Should().BeTrue();
-            notificationContext.ErrorNotifications.Should().NotBeEmpty();
-            notificationContext.ErrorNotifications.Should().HaveCount(1);
-            notificationContext.ErrorNotifications.Should().ContainSingle();
-            notificationContext.ErrorNotifications.Should().Satisfy(e => e.Key == "COD0001" && e.Message == "Title is required.");
-            notificationContext.SuccessNotifications.Should().BeEmpty();
+            createTodoUseCase.Should().NotBeNull();
+
+            createTodoUseCase.HasErrorNotification.Should().BeTrue();
+
+            createTodoUseCase.ErrorNotifications.Should().NotBeEmpty();
+            createTodoUseCase.ErrorNotifications.Should().HaveCount(1);
+            createTodoUseCase.ErrorNotifications.Should().ContainSingle();
+            createTodoUseCase.ErrorNotifications.Should().Satisfy(e => e.Key == "COD0001" && e.Message == "Title is required.");
+
+            createTodoUseCase.SuccessNotifications.Should().BeEmpty();
         }
     }
 }
