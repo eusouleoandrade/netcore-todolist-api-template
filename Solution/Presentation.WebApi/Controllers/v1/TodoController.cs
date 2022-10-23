@@ -22,6 +22,11 @@ namespace Presentation.WebApi.Controllers.v1
             _notificationContext = notificationContext;
         }
 
+        /// <summary>
+        /// Get todos
+        /// </summary>
+        /// <param name="getAllTodoUseCase"></param>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<List<TodoQuery>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
@@ -33,6 +38,12 @@ namespace Presentation.WebApi.Controllers.v1
             return Ok(new Response<IReadOnlyList<TodoQuery>>(useCaseResponse, true));
         }
 
+        /// <summary>
+        /// Create todo
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="createTodoUseCase"></param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Response<CreateTodoQuery>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
@@ -53,6 +64,12 @@ namespace Presentation.WebApi.Controllers.v1
             return Created($"/api/v1/todo/{response.Id}", new Response<CreateTodoQuery>(data: response, succeeded: true));
         }
 
+        /// <summary>
+        /// Delete todo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="deleteTodoUsecase"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
@@ -71,6 +88,12 @@ namespace Presentation.WebApi.Controllers.v1
             return NoContent();
         }
 
+        /// <summary>
+        /// Get todo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="getTodoUseCase"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<GetTodoQuery>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
@@ -91,6 +114,13 @@ namespace Presentation.WebApi.Controllers.v1
             return Ok(new Response<GetTodoQuery>(succeeded: true, data: response));
         }
 
+        /// <summary>
+        /// Update todo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="request"></param>
+        /// <param name="updateTodoUseCase"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
@@ -110,6 +140,13 @@ namespace Presentation.WebApi.Controllers.v1
             return Ok(new Response(succeeded: true));
         }
 
+        /// <summary>
+        /// Set done todo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="request"></param>
+        /// <param name="setDoneTodoUseCase"></param>
+        /// <returns></returns>
         [HttpPatch("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
