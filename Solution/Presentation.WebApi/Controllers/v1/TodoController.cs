@@ -12,50 +12,39 @@ namespace Presentation.WebApi.Controllers.v1
     [ApiVersion("1.0")]
     public class TodoController : BaseApiController
     {
-        private readonly IGetAllTodoUseCase _getAllTodoUseCase;
-        private readonly ICreateTodoUseCase _createTodoUseCase;
-        private readonly IDeleteTodoUseCase _deleteTodoUseCase;
-        private readonly IGetTodoUseCase _getTodoUseCase;
-        private readonly IUpdateTodoUseCase _updateTodoUseCase;
-        private readonly ISetDoneTodoUseCase _setDoneTodoUseCase;
         private readonly IMapper _mapper;
         private readonly NotificationContext _notificationContext;
 
-        public TodoController(IGetAllTodoUseCase getAllTodoUseCase,
-            ICreateTodoUseCase createTodoUseCase,
-            IMapper mapper,
-            NotificationContext notificationContext,
-            IDeleteTodoUseCase deleteTodoUseCase,
-            IUpdateTodoUseCase updateTodoUseCase,
-            ISetDoneTodoUseCase setDoneTodoUseCase,
-            IGetTodoUseCase getTodoUseCase)
+        public TodoController(IMapper mapper,
+            NotificationContext notificationContext)
         {
-            _getAllTodoUseCase = getAllTodoUseCase;
-            _createTodoUseCase = createTodoUseCase;
             _mapper = mapper;
             _notificationContext = notificationContext;
-            _deleteTodoUseCase = deleteTodoUseCase;
-            _getTodoUseCase = getTodoUseCase;
-            _updateTodoUseCase = updateTodoUseCase;
-            _setDoneTodoUseCase = setDoneTodoUseCase;
         }
 
         [HttpGet]
-        public async Task<ActionResult<Response<List<TodoQuery>>>> Get()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<List<TodoQuery>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(Response))]
+        public async Task<ActionResult<Response<List<TodoQuery>>>> Get([FromServices] IGetAllTodoUseCase getAllTodoUseCase)
         {
-            var useCaseResponse = await _getAllTodoUseCase.RunAsync();
+            var useCaseResponse = await getAllTodoUseCase.RunAsync();
 
             return Ok(new Response<IReadOnlyList<TodoQuery>>(useCaseResponse, true));
         }
 
         [HttpPost]
-        public async Task<ActionResult<Response<CreateTodoQuery>>> Post([FromBody] CreateTodoRequest request)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Response<CreateTodoQuery>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(Response))]
+        public async Task<ActionResult<Response<CreateTodoQuery>>> Post([FromBody] CreateTodoRequest request,
+            [FromServices] ICreateTodoUseCase createTodoUseCase)
         {
-            var useCaseResponse = await _createTodoUseCase.RunAsync(_mapper.Map<CreateTodoUseCaseRequest>(request));
+            var useCaseResponse = await createTodoUseCase.RunAsync(_mapper.Map<CreateTodoUseCaseRequest>(request));
 
-            if (_createTodoUseCase.HasErrorNotification)
+            if (createTodoUseCase.HasErrorNotification)
             {
-                _notificationContext.AddErrorNotifications(_createTodoUseCase);
+                _notificationContext.AddErrorNotifications(createTodoUseCase);
                 return BadRequest();
             }
 
@@ -65,13 +54,17 @@ namespace Presentation.WebApi.Controllers.v1
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Response>> Delete(int id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(Response))]
+        public async Task<ActionResult<Response>> Delete([FromRoute(Name = "id")] int id,
+            [FromServices] IDeleteTodoUseCase deleteTodoUsecase)
         {
-            await _deleteTodoUseCase.RunAsync(id);
+            await deleteTodoUsecase.RunAsync(id);
 
-            if (_deleteTodoUseCase.HasErrorNotification)
+            if (deleteTodoUsecase.HasErrorNotification)
             {
-                _notificationContext.AddErrorNotifications(_deleteTodoUseCase);
+                _notificationContext.AddErrorNotifications(deleteTodoUsecase);
                 return BadRequest();
             }
 
@@ -79,13 +72,17 @@ namespace Presentation.WebApi.Controllers.v1
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Response<GetTodoQuery>>> Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<GetTodoQuery>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(Response))]
+        public async Task<ActionResult<Response<GetTodoQuery>>> Get([FromRoute(Name = "id")] int id,
+            [FromServices] IGetTodoUseCase getTodoUseCase)
         {
-            var useCaseResponse = await _getTodoUseCase.RunAsync(id);
+            var useCaseResponse = await getTodoUseCase.RunAsync(id);
 
-            if (_getTodoUseCase.HasErrorNotification)
+            if (getTodoUseCase.HasErrorNotification)
             {
-                _notificationContext.AddErrorNotifications(_getTodoUseCase);
+                _notificationContext.AddErrorNotifications(getTodoUseCase);
                 return BadRequest();
             }
 
@@ -95,13 +92,18 @@ namespace Presentation.WebApi.Controllers.v1
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Response>> Put(int id, [FromBody] UpdateTodoRequest request)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(Response))]
+        public async Task<ActionResult<Response>> Put([FromRoute(Name = "id")] int id,
+            [FromBody] UpdateTodoRequest request,
+            [FromServices] IUpdateTodoUseCase updateTodoUseCase)
         {
-            await _updateTodoUseCase.RunAsync(new UpdateTodoUseCaseRequest(id, request.Title, request.Done));
+            await updateTodoUseCase.RunAsync(new UpdateTodoUseCaseRequest(id, request.Title, request.Done));
 
-            if (_updateTodoUseCase.HasErrorNotification)
+            if (updateTodoUseCase.HasErrorNotification)
             {
-                _notificationContext.AddErrorNotifications(_updateTodoUseCase);
+                _notificationContext.AddErrorNotifications(updateTodoUseCase);
                 return BadRequest();
             }
 
@@ -109,13 +111,18 @@ namespace Presentation.WebApi.Controllers.v1
         }
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult<Response>> Patch(int id, [FromBody] SetDoneTodoRequest request)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(Response))]
+        public async Task<ActionResult<Response>> Patch([FromRoute(Name = "id")] int id,
+            [FromBody] SetDoneTodoRequest request,
+            [FromServices] ISetDoneTodoUseCase setDoneTodoUseCase)
         {
-            await _setDoneTodoUseCase.RunAsync(new SetDoneTodoUseCaseRequest(id, request.Done));
+            await setDoneTodoUseCase.RunAsync(new SetDoneTodoUseCaseRequest(id, request.Done));
 
-            if (_setDoneTodoUseCase.HasErrorNotification)
+            if (setDoneTodoUseCase.HasErrorNotification)
             {
-                _notificationContext.AddErrorNotifications(_setDoneTodoUseCase);
+                _notificationContext.AddErrorNotifications(setDoneTodoUseCase);
                 return BadRequest();
             }
 
