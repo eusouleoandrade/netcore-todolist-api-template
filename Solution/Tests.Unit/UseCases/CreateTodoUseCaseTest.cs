@@ -78,8 +78,6 @@ namespace Tests.Unit.UseCases
             useCaseResponse.Should().BeNull();
             useCaseResponse.Should().Be(default);
 
-            createTodoUseCase.Should().NotBeNull();
-
             createTodoUseCase.HasErrorNotification.Should().BeTrue();
 
             createTodoUseCase.ErrorNotifications.Should().NotBeEmpty();
