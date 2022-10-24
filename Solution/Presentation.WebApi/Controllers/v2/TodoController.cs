@@ -9,7 +9,10 @@ namespace Presentation.WebApi.Controllers.v2
     public class TodoController : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<Response<List<TodoQuery>>>> Get()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<List<TodoQuery>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(Response))]
+        public async Task<IActionResult> Get()
         {
             IReadOnlyList<TodoQuery> todoQuery = new List<TodoQuery>
             {
