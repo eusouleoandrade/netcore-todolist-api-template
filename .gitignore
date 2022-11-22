@@ -350,3 +350,6 @@ MigrationBackup/
 .ionide/
 .vscode/launch.json
 .vscode/tasks.json
+
+# Coverage
+coverage.json
