@@ -65,12 +65,19 @@ namespace Tests.Unit.UseCases
         /// <summary>
         /// Should not execute successfully when failed to remove
         /// </summary>
+        /// <param name="id"></param>
+        /// <param name="title"></param>
+        /// <param name="done"></param>
         /// <returns></returns>
-        [Fact(DisplayName = "Should not execute successfully when failed to remove")]
-        public async Task ShouldNotExecute_WhenFailedToRemove()
+        [InlineData(1, "Ir ao mercado.", true)]
+        [InlineData(2, "Ir ao Dentista.", false)]
+        [InlineData(3, "Fazer investimentos.", true)]
+        [InlineData(4, "Pagar as contas.", false)]
+        [Theory(DisplayName = "Should not execute successfully when failed to remove")]
+        public async Task ShouldNotExecute_WhenFailedToRemove(int id, string title, bool done)
         {
             // Arranje
-            var getTodoUseCaseResponse = new GetTodoUseCaseResponse(1, "Title", true);
+            var getTodoUseCaseResponse = new GetTodoUseCaseResponse(id, title, done);
             _getTodoUseCaseMock.Setup(x => x.RunAsync(It.IsAny<int>())).ReturnsAsync(getTodoUseCaseResponse);
 
             var deleteGenericRepositoryAsyncResponse = false;
@@ -79,7 +86,7 @@ namespace Tests.Unit.UseCases
             var deleteTodoUseCase = new DeleteTodoUseCase(_genericRepositoryAsyncMock.Object, _getTodoUseCaseMock.Object, _mapperMock);
 
             // Act
-            await deleteTodoUseCase.RunAsync(1);
+            await deleteTodoUseCase.RunAsync(id);
 
             // Assert
             deleteTodoUseCase.Should().NotBeNull();
