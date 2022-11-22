@@ -29,7 +29,7 @@ namespace Core.Application.UseCases
 
             var getTodoUseCaseResponse = await _getTodoUseCase.RunAsync(request.Id);
 
-            if (_getTodoUseCase.HasErrorNotification || getTodoUseCaseResponse is null)
+            if (_getTodoUseCase.HasErrorNotification)
             {
                 AddErrorNotifications(_getTodoUseCase);
                 return;

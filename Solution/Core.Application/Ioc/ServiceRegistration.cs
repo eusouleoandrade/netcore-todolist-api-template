@@ -1,10 +1,12 @@
 ﻿using Core.Application.Interfaces.UseCases;
 using Core.Application.UseCases;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Core.Application.Ioc
 {
+    [ExcludeFromCodeCoverage]
     public static class ServiceRegistration
     {
         public static void AddApplicationLayer(this IServiceCollection services)
