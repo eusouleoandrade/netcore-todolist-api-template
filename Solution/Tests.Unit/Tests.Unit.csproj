@@ -29,6 +29,24 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core.Application\Core.Application.csproj" />
+    <ProjectReference Include="..\Core.Domain\Core.Domain.csproj" />
+    <ProjectReference Include="..\Infra.Notification\Infra.Notification.csproj" />
+    <ProjectReference Include="..\Infra.Persistence\Infra.Persistence.csproj" />
+    <ProjectReference Include="..\Presentation.WebApi\Presentation.WebApi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Application\" />
+    <None Remove="Application\UseCases\" />
+    <None Remove="Application\Dtos\" />
+    <None Remove="Application\Dtos\Queries\" />
+    <None Remove="Application\Dtos\Requests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Application\" />
+    <Folder Include="Application\UseCases\" />
+    <Folder Include="Application\Dtos\" />
+    <Folder Include="Application\Dtos\Queries\" />
+    <Folder Include="Application\Dtos\Requests\" />
+  </ItemGroup>
 </Project>
