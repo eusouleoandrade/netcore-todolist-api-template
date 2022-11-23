@@ -10,7 +10,7 @@ using Core.Application.Dtos.Requests;
 using Core.Application.Dtos.Responses;
 using FluentAssertions;
 
-namespace Tests.Unit.UseCases
+namespace Tests.Unit.Application.UseCases
 {
 	public class UpdateTodoUseCaseTest
 	{
@@ -165,4 +165,3 @@ namespace Tests.Unit.UseCases
         }
     }
 }
-

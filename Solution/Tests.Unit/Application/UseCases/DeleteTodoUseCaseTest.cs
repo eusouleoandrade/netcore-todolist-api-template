@@ -9,7 +9,7 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace Tests.Unit.UseCases
+namespace Tests.Unit.Application.UseCases
 {
     public class DeleteTodoUseCaseTest
     {
