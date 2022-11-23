@@ -1,9 +1,11 @@
 ﻿using Core.Application.Resources;
 using Infra.Notification.Models;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
 namespace Core.Application.Dtos.Wrappers
 {
+    [ExcludeFromCodeCoverage]
     public class Response<TData>
         where TData : class
 
@@ -33,6 +35,7 @@ namespace Core.Application.Dtos.Wrappers
         }
     }
 
+    [ExcludeFromCodeCoverage]
     public class Response<TData, TErrors>
         where TData : class
         where TErrors : class
@@ -63,6 +66,7 @@ namespace Core.Application.Dtos.Wrappers
         }
     }
 
+    [ExcludeFromCodeCoverage]
     public class Response
     {
         public bool Succeeded { get; set; }
