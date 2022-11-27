@@ -353,3 +353,5 @@ MigrationBackup/
 
 # Coverage
 coverage.json
+Solution/.vscode/launch.json
+Solution/.vscode/tasks.json

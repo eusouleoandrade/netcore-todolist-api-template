@@ -21,14 +21,14 @@ namespace Core.Application.UseCases
             _mapper = mapper;
         }
 
-        public async Task RunAsync(int id)
+        public async Task<bool> RunAsync(int id)
         {
             var getTodoUseCaseResponse = await _getTodoUseCase.RunAsync(id);
 
             if (_getTodoUseCase.HasErrorNotification)
             {
                 AddErrorNotifications(_getTodoUseCase);
-                return;
+                return default;
             }
 
             var todo = _mapper.Map<Todo>(getTodoUseCaseResponse);
@@ -37,6 +37,8 @@ namespace Core.Application.UseCases
 
             if (!removed)
                 AddErrorNotification(Msg.FAILED_TO_REMOVE_X0_COD, Msg.FAILED_TO_REMOVE_X0_TXT.ToFormat("Todo"));
+
+            return removed;
         }
     }
 }

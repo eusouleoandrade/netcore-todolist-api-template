@@ -1,7 +1,9 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Core.Application.Exceptions
 {
+    [ExcludeFromCodeCoverage]
     public class AppException : Exception
     {
         public AppException()
