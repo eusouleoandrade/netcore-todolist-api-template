@@ -54,9 +54,11 @@ namespace Tests.Unit.Application.UseCases
             var deleteTodoUseCase = new DeleteTodoUseCase(_genericRepositoryAsyncMock.Object, _getTodoUseCaseMock.Object, _mapperMock);
 
             // Act
-            await deleteTodoUseCase.RunAsync(id);
+            var deleteUseCaseResponse = await deleteTodoUseCase.RunAsync(id);
 
             // Assert
+            deleteUseCaseResponse.Should().BeTrue();
+
             deleteTodoUseCase.HasErrorNotification.Should().BeFalse();
             deleteTodoUseCase.ErrorNotifications.Should().HaveCount(0);
             deleteTodoUseCase.ErrorNotifications.Should().BeEmpty();
@@ -86,10 +88,10 @@ namespace Tests.Unit.Application.UseCases
             var deleteTodoUseCase = new DeleteTodoUseCase(_genericRepositoryAsyncMock.Object, _getTodoUseCaseMock.Object, _mapperMock);
 
             // Act
-            await deleteTodoUseCase.RunAsync(id);
+            var deleteUseCaseResponse = await deleteTodoUseCase.RunAsync(id);
 
             // Assert
-            deleteTodoUseCase.Should().NotBeNull();
+            deleteUseCaseResponse.Should().Be(default);
 
             deleteTodoUseCase.HasErrorNotification.Should().BeTrue();
 

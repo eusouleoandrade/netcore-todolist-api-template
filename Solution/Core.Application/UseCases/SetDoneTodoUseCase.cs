@@ -19,14 +19,14 @@ namespace Core.Application.UseCases
             _getTodoUseCase = getTodoUseCase;
         }
 
-        public async Task RunAsync(SetDoneTodoUseCaseRequest request)
+        public async Task<bool> RunAsync(SetDoneTodoUseCaseRequest request)
         {
             var getTodoUseCaseResponse = await _getTodoUseCase.RunAsync(request.Id);
 
             if (_getTodoUseCase.HasErrorNotification)
             {
                 AddErrorNotifications(_getTodoUseCase);
-                return;
+                return default;
             }
 
             var todo = new Todo(getTodoUseCaseResponse.Id, getTodoUseCaseResponse.Title, request.Done);
@@ -35,6 +35,8 @@ namespace Core.Application.UseCases
 
             if (!updated)
                 AddErrorNotification(Msg.FAILED_TO_UPDATE_X0_COD, Msg.FAILED_TO_UPDATE_X0_TXT.ToFormat("Todo"));
+            
+            return updated;
         }
     }
 }

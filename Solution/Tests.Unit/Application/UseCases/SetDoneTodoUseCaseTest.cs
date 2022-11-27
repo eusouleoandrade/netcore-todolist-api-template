@@ -52,10 +52,10 @@ namespace Tests.Unit.Application.UseCases
             var setDoneTodoUseCase = new SetDoneTodoUseCase(_genericRepositoryAsyncMock.Object, _getTodoUseCaseMock.Object);
 
             // Act
-            await setDoneTodoUseCase.RunAsync(setDoneTodoUseCaseRequest);
+            var setDoneTodoUseCaseResponse = await setDoneTodoUseCase.RunAsync(setDoneTodoUseCaseRequest);
 
             // Assert
-            setDoneTodoUseCase.Should().NotBeNull();
+            setDoneTodoUseCaseResponse.Should().BeTrue();
 
             setDoneTodoUseCase.HasErrorNotification.Should().BeFalse();
 
@@ -89,10 +89,10 @@ namespace Tests.Unit.Application.UseCases
             var setDoneTodoUseCase = new SetDoneTodoUseCase(_genericRepositoryAsyncMock.Object, _getTodoUseCaseMock.Object);
 
             // Act
-            await setDoneTodoUseCase.RunAsync(setDoneTodoUseCaseRequest);
+            var setDoneTodoUseCaseResponse =  await setDoneTodoUseCase.RunAsync(setDoneTodoUseCaseRequest);
 
             // Assert
-            setDoneTodoUseCase.Should().NotBeNull();
+            setDoneTodoUseCaseResponse.Should().Be(default);
 
             setDoneTodoUseCase.HasErrorNotification.Should().BeTrue();
 

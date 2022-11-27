@@ -52,10 +52,10 @@ namespace Tests.Unit.Application.UseCases
             var updateTodoUseCaseRequest = new UpdateTodoUseCaseRequest(id, $"{title} updated", !done);
 
             // Act
-            await updateTodoUseCase.RunAsync(updateTodoUseCaseRequest);
+            var updateTodoUseCaseResponse = await updateTodoUseCase.RunAsync(updateTodoUseCaseRequest);
 
             // Assert
-            updateTodoUseCase.Should().NotBeNull();
+            updateTodoUseCaseResponse.Should().BeTrue();
 
             updateTodoUseCase.HasErrorNotification.Should().BeFalse();
 
@@ -81,9 +81,11 @@ namespace Tests.Unit.Application.UseCases
             var updateTodoUseCaseRequest = new UpdateTodoUseCaseRequest(id, title, done);
 
             // Act
-            await updateTodoUseCase.RunAsync(updateTodoUseCaseRequest);
+            var updateTodoUseCaseResponse = await updateTodoUseCase.RunAsync(updateTodoUseCaseRequest);
 
             // Assert
+            updateTodoUseCaseResponse.Should().Be(default);
+
             updateTodoUseCase.HasErrorNotification.Should().BeTrue();
 
             updateTodoUseCase.ErrorNotifications.Should().NotBeEmpty();
@@ -112,9 +114,11 @@ namespace Tests.Unit.Application.UseCases
             var updateTodoUseCaseRequest = new UpdateTodoUseCaseRequest(id, title, done);
 
             // Act
-            await updateTodoUseCase.RunAsync(updateTodoUseCaseRequest);
+            var updateTodoUseCaseResponse = await updateTodoUseCase.RunAsync(updateTodoUseCaseRequest);
 
             // Assert
+            updateTodoUseCaseResponse.Should().Be(default);
+
             updateTodoUseCase.HasErrorNotification.Should().BeTrue();
 
             updateTodoUseCase.ErrorNotifications.Should().NotBeEmpty();
@@ -151,9 +155,11 @@ namespace Tests.Unit.Application.UseCases
             var updateTodoUseCaseRequest = new UpdateTodoUseCaseRequest(id, $"{title} updated", !done);
 
             // Act
-            await updateTodoUseCase.RunAsync(updateTodoUseCaseRequest);
+            var updateTodoUseCaseResponse = await updateTodoUseCase.RunAsync(updateTodoUseCaseRequest);
 
             // Assert
+            updateTodoUseCaseResponse.Should().Be(default);
+
             updateTodoUseCase.HasErrorNotification.Should().BeTrue();
 
             updateTodoUseCase.ErrorNotifications.Should().NotBeEmpty();
