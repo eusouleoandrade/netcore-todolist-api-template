@@ -1,10 +1,12 @@
-﻿using Infra.Notification.Interfaces;
+﻿using System.Diagnostics.CodeAnalysis;
+using Infra.Notification.Interfaces;
 using Infra.Notification.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Infra.Notification.Abstractions
 {
+    [ExcludeFromCodeCoverage]
     public abstract class Notifiable : Notifiable<NotificationMessage>, INotifiable
     {
         // Error notifications
@@ -15,12 +17,6 @@ namespace Infra.Notification.Abstractions
 
         public void AddErrorNotification(string key, string message, params object[] parameters)
             => _errorNotifications.Add(new NotificationMessage(key, string.Format(message, parameters)));
-
-        //public void AddErrorNotifications(params Notifiable[] objects)
-        //{
-        //    foreach (Notifiable notifiable in objects)
-        //        _errorNotifications.AddRange(notifiable.ErrorNotifications);
-        //}
 
         public void AddErrorNotifications(params INotifiable[] objects)
         {
@@ -35,12 +31,6 @@ namespace Infra.Notification.Abstractions
         public void AddSuccessNotification(string key, string message, params object[] parameters)
             => _successNotifications.Add(new NotificationMessage(key, string.Format(message, parameters)));
 
-        //public void AddSuccessNotifications(params Notifiable[] objects)
-        //{
-        //    foreach (Notifiable notifiable in objects)
-        //        _successNotifications.AddRange(notifiable.ErrorNotifications);
-        //}
-
         public void AddSuccessNotifications(params INotifiable[] objects)
         {
             foreach (INotifiable notifiable in objects)
@@ -48,8 +38,9 @@ namespace Infra.Notification.Abstractions
         }
     }
 
+    [ExcludeFromCodeCoverage]
     public abstract class Notifiable<TNotificationMessage> : INotifiable<TNotificationMessage>, IDisposable
-        where TNotificationMessage : class
+            where TNotificationMessage : class
     {
         protected readonly List<TNotificationMessage> _errorNotifications;
 
