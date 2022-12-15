@@ -1,10 +1,12 @@
-﻿using Core.Application.Dtos.Queries;
+﻿using System.Diagnostics.CodeAnalysis;
+using Core.Application.Dtos.Queries;
 using Core.Application.Dtos.Wrappers;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.WebApi.Controllers.Common;
 
 namespace Presentation.WebApi.Controllers.v2
 {
+    [ExcludeFromCodeCoverage]
     [ApiVersion("2.0")]
     public class TodoController : BaseApiController
     {

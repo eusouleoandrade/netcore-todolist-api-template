@@ -1,8 +1,10 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 
 namespace Infra.Persistence.Configs
 {
+    [ExcludeFromCodeCoverage]
     public abstract class ConnectionConfig : IDisposable
     {
         protected readonly SqliteConnection _connection;

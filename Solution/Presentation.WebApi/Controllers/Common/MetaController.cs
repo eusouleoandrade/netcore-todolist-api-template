@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Presentation.WebApi.Controllers.Common
 {
+    [ExcludeFromCodeCoverage]
     public class MetaController : BaseApiController
     {
         [HttpGet("/info")]

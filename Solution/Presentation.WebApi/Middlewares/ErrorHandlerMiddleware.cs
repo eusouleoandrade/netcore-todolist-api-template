@@ -1,11 +1,13 @@
 ﻿using Core.Application.Dtos.Wrappers;
 using Core.Application.Exceptions;
 using Core.Application.Resources;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text.Json;
 
 namespace Presentation.WebApi.Middlewares
 {
+    [ExcludeFromCodeCoverage]
     public class ErrorHandlerMiddleware
     {
         private readonly RequestDelegate _next;

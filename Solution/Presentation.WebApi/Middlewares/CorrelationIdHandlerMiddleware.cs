@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using Presentation.WebApi.Options;
 
 namespace Presentation.WebApi.Middlewares
 {
+    [ExcludeFromCodeCoverage]
     public class CorrelationIdHandlerMiddleware
     {
         private readonly RequestDelegate _next;

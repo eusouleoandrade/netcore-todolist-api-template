@@ -1,4 +1,5 @@
-﻿using Core.Application.Exceptions;
+﻿using System.Diagnostics.CodeAnalysis;
+using Core.Application.Exceptions;
 using Core.Application.Interfaces.Repositories;
 using Core.Application.Resources;
 using Core.Domain.Entities;
@@ -8,6 +9,7 @@ using static Dapper.SqlMapper;
 
 namespace Infra.Persistence.Repositories
 {
+    [ExcludeFromCodeCoverage]
     public class TodoRepositoryAsync : GenericRepositoryAsync<Todo, int>, ITodoRepositoryAsync
     {
         public TodoRepositoryAsync(IConfiguration configuration)

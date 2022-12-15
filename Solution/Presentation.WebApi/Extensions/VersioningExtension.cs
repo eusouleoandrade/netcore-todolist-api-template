@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.WebApi.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class VersioningExtension
     {
         public static void AddApiVersioningExtension(this IServiceCollection services)

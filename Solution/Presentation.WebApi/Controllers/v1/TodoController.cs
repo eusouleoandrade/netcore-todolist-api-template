@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics.CodeAnalysis;
+using AutoMapper;
 using Core.Application.Dtos.Queries;
 using Core.Application.Dtos.Requests;
 using Core.Application.Dtos.Wrappers;
@@ -9,6 +10,7 @@ using Presentation.WebApi.Controllers.Common;
 
 namespace Presentation.WebApi.Controllers.v1
 {
+    [ExcludeFromCodeCoverage]
     [ApiVersion("1.0")]
     public class TodoController : BaseApiController
     {
