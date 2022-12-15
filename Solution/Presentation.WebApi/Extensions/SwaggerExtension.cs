@@ -1,7 +1,9 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.OpenApi.Models;
 
 namespace Presentation.WebApi.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class SwaggerExtension
     {
         public static void AddSwaggerExtension(this IServiceCollection services)

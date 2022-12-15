@@ -1,4 +1,5 @@
-﻿using Core.Application.Exceptions;
+﻿using System.Diagnostics.CodeAnalysis;
+using Core.Application.Exceptions;
 using Core.Application.Resources;
 using Dapper;
 using Microsoft.Data.Sqlite;
@@ -7,6 +8,7 @@ namespace Infra.Persistence.Bootstraps
 {
     public static class TodoBootstrap
     {
+        [ExcludeFromCodeCoverage]
         public static void Setup(SqliteConnection connection)
         {
             try

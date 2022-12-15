@@ -1,5 +1,8 @@
-﻿namespace Presentation.WebApi.Options
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Presentation.WebApi.Options
 {
+    [ExcludeFromCodeCoverage]
     public class CorrelationIdOptions
     {
         private const string DefaultHeader = "X-Correlation-ID";

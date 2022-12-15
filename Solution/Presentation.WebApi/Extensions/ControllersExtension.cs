@@ -1,7 +1,9 @@
-﻿using Presentation.WebApi.Filters;
+﻿using System.Diagnostics.CodeAnalysis;
+using Presentation.WebApi.Filters;
 
 namespace Presentation.WebApi.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class ControllersExtension
     {
         public static void AddControllerExtension(this IServiceCollection services)

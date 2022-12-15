@@ -1,4 +1,5 @@
-﻿using Core.Application.Exceptions;
+﻿using System.Diagnostics.CodeAnalysis;
+using Core.Application.Exceptions;
 using Core.Application.Interfaces.Repositories;
 using Core.Application.Resources;
 using Dapper.Contrib.Extensions;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Infra.Persistence.Repositories
 {
+    [ExcludeFromCodeCoverage]
     public class GenericRepositoryAsync<TEntity, TId> : ConnectionConfig, IGenericRepositoryAsync<TEntity, TId>
         where TEntity : class
         where TId : struct
